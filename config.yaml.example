@@ -1,0 +1,36 @@
+# Norfrig Photo Hub — configuración
+# Copiá este archivo como config.yaml y ajustá los paths
+
+roots:
+  - name: LAUTARO
+    path: "M:\\LAUTARO"
+  - name: PABLO_Recursos
+    path: "M:\\PABLO_Recursos"
+  - name: RESPALDOS
+    path: "M:\\RESPALDOS"
+
+server:
+  port: 8080
+
+db:
+  path: "data/hub.db"
+
+thumbnails:
+  dir: "data/thumbs"
+  size: 256
+
+indexer:
+  workers: 4
+
+sku:
+  blacklist:
+    - JPG
+    - PNG
+    - WEB
+    - WEBP
+    - COMBOS
+    - LAUTARO
+    - PABLO_Recursos
+    - RESPALDOS
+    - FOTOS
+    - IMAGENES

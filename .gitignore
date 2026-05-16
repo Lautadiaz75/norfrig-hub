@@ -1,0 +1,19 @@
+# binarios compilados
+*.exe
+hub-mac-arm64
+hub-mac-intel
+
+# datos locales (DB, thumbnails)
+data/
+
+# configuración con paths locales
+config.yaml
+
+# frontend build
+web/dist/
+web/node_modules/
+
+# SQLite WAL files
+*.db
+*.db-shm
+*.db-wal

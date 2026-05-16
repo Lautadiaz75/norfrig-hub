@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go mod *)",
+      "Bash(go run *)",
+      "Bash(Get-ChildItem -Recurse \"C:\\\\Users\\\\Norfirg SRL\\\\Desktop\\\\LAUTARO\\\\Proyecto HUB\\\\testdata\")",
+      "Bash(Select-Object FullName)",
+      "Bash(go build *)"
+    ]
+  }
+}
