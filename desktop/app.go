@@ -35,18 +35,36 @@ func NewApp() *App {
 	return &App{}
 }
 
-// findConfig busca config.yaml en el directorio actual y en el padre.
-// Cambia el working directory al directorio donde lo encuentra para que
-// los paths relativos del config (data/hub.db, data/thumbs) resuelvan bien.
+// findConfig busca config.yaml subiendo desde el directorio del ejecutable
+// y desde el directorio actual. Cambia el working directory al directorio
+// donde lo encuentra para que los paths relativos del config funcionen.
 func findConfig() string {
-	for _, p := range []string{"config.yaml", "../config.yaml"} {
-		abs, err := filepath.Abs(p)
-		if err != nil {
-			continue
+	var candidates []string
+
+	// buscar desde el directorio del ejecutable (producción: build/bin/hub-desktop.exe)
+	if exe, err := os.Executable(); err == nil {
+		dir := filepath.Dir(exe)
+		for i := 0; i < 6; i++ {
+			candidates = append(candidates, filepath.Join(dir, "config.yaml"))
+			parent := filepath.Dir(dir)
+			if parent == dir {
+				break
+			}
+			dir = parent
 		}
-		if _, err := os.Stat(abs); err == nil {
-			os.Chdir(filepath.Dir(abs)) //nolint:errcheck
-			return abs
+	}
+
+	// buscar desde el directorio actual (dev mode)
+	for _, rel := range []string{"config.yaml", "../config.yaml", "../../config.yaml", "../../../config.yaml"} {
+		if abs, err := filepath.Abs(rel); err == nil {
+			candidates = append(candidates, abs)
+		}
+	}
+
+	for _, p := range candidates {
+		if _, err := os.Stat(p); err == nil {
+			os.Chdir(filepath.Dir(p)) //nolint:errcheck
+			return p
 		}
 	}
 	return ""
